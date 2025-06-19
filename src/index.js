@@ -10,7 +10,7 @@
 
 export default {
 	async fetch(request) {
-		console.log(request)
+		//console.log(request)
 		function getQueryPram(key){
 			if (request.url.includes("?")){
 				const query = request.url.split("?");
@@ -27,11 +27,12 @@ export default {
 		}
 		if (request.url.includes("/img/social/")){
 			let dir = "/img/social/"
-			if (getQueryPram('dark') == 'true'){
-				dir += "dark/"
-			} else{if(getQueryPram('dark') == 'false'){
-				dir += "light/"
-			}}
+			const dark = await getQueryPram('dark')
+			if (dark == 'true'){
+				dir = dir + "dark/"
+			} else{
+				dir = dir + "light/"
+			}
 			const fileQ = request.url.split('/social/');
 			const file = dir + fileQ[1].split("?")[0];
 			const url = "https://cdn.aball.dev" + file;
